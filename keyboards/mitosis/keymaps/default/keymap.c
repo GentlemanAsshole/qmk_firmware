@@ -9,72 +9,82 @@
 // entirely and just use numbers.
 enum mitosis_layers
 {
-	_MALT,
-	_SHIFTED,
-	_FUNCTION,
-	_FUNCSHIFT
+	_QWERTY,
+	_DVORAK,
+	_LOWER,
+	_RAISE,
+	_MISC
 };
 
 enum mitosis_keycodes 
 {
-  FNKEY = SAFE_RANGE,
-  SHIFT
+  LOWER = SAFE_RANGE,
+  RAISE,
+  DVORAK,
+  QWERTY
 };
 
 
 // Macro definitions for readability
-enum mitosis_macros
-{
-	VOLU,
-	VOLD,
-	ESCM
-};
+//enum mitosis_macros
+//{
+	//VOLU,
+	//VOLD,
+	//ESCM
+//};
 
-#define LONGPRESS_DELAY 150
-#define LAYER_TOGGLE_DELAY 300
+//#define LONGPRESS_DELAY 150
+//#define LAYER_TOGGLE_DELAY 300
 
 // Fillers to make layering more clear
 #define _______ KC_TRNS
 #define XXXXXXX KC_NO
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-[_MALT] = { /* Malt Layout, customised for reduced columns (ex: quote and shift locations) */
-  {KC_Q,    KC_P,    KC_Y,    KC_C,    KC_B,           KC_V,    KC_M,    KC_U,    KC_Z,    KC_L    },
-  {KC_A,    KC_N,    KC_I,    KC_S,    KC_F,           KC_D,    KC_T,    KC_H,    KC_O,    KC_R    },
-  {KC_COMM, KC_DOT,  KC_J,    KC_G,    KC_SLSH,        KC_SCLN, KC_W,    KC_K,    KC_QUOT, KC_X    },
-  {XXXXXXX, M(VOLU), M(ESCM), KC_TAB,  KC_LCTL,        KC_LALT, KC_ENT,  KC_DEL,  KC_PGUP, XXXXXXX },
-  {XXXXXXX, M(VOLD), KC_LGUI, KC_E,    FNKEY,          SHIFT,   KC_SPC,  KC_BSPC, KC_PGDN, XXXXXXX }
+[_QWERTY] = { 
+
+  {KC_ESC,  KC_1,    KC_2,     KC_3,  KC_4,   KC_5,      KC_6,  KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC},
+  {KC_TAB,  KC_Q,    KC_W,     KC_E,  KC_R,   KC_T,      KC_Y,  KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS},
+  {KC_LCTRL,KC_A,    KC_S,     KC_D,  KC_F,   KC_G,      KC_H,  KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
+  {KC_LSFT, KC_Z,    KC_X,     KC_C,  KC_V,   KC_B,      KC_N,  KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT},
+  {KC_F17,  KC_LGUI, KC_LALT, LOWER,  KC_SPC, XXXXXXX, XXXXXXX,  KC_SPC,  RAISE,   KC_RALT, KC_RGUI, KC_ENT}
+},
+
+[_DVORAK] = {
+  
+  {KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,       KC_6,   KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC},
+  {KC_TAB,  KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,       KC_F,   KC_G,    KC_C,    KC_R,    KC_L,    KC_SLSH},
+  {KC_LCTL, KC_A,    KC_O,    KC_E,    KC_U,    KC_I,       KC_D,   KC_H,    KC_T,    KC_N,    KC_S,    KC_MINS},
+  {KC_LSFT, KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,       KC_B,   KC_M,    KC_W,    KC_V,    KC_Z,    KC_RSFT},
+  {KC_F17,  KC_LGUI, KC_LALT, LOWER,   KC_SPC,  XXXXXXX, XXXXXXX,   KC_SPC,  RAISE,   KC_RALT, KC_RGUI, KC_ENT}
+},
+
+[_LOWER] = { 
+
+  { KC_GRV, _______, _______, _______, _______, _______,       _______, _______, _______, KC_PSCR, KC_SLCK, KC_PAUSE},
+  {_______, _______, _______, _______, _______, _______,       KC_P7,   KC_P8,   KC_P9,	  KC_INS,  KC_HOME, KC_PGUP },
+  {_______, _______, _______, _______, _______, _______,       KC_P4,   KC_P5,   KC_P6,	  KC_DEL,  KC_END,  KC_PGDN },
+  {_______, _______, _______, _______, _______, _______,       KC_P1,   KC_P2,   KC_P3,   KC_BSPC, KC_UP,   _______ },
+  {_______, _______, _______, _______, _______, XXXXXXX,       XXXXXXX, KC_P0, _______,   KC_LEFT, KC_DOWN, KC_RIGHT}
+},
+
+[_RAISE] = { 
+
+  {KC_GRV, KC_F1,   KC_F2,   KC_F3,   KC_F4,    _______,       _______, _______, _______, KC_LBRC, KC_RBRC, _______ },
+  {_______,KC_F5,   KC_F6,   KC_F7,   KC_F8,    _______,       _______, _______, _______, KC_MINS, KC_EQL,  _______ },
+  {_______,KC_F9,   KC_F10,  KC_F11,  KC_F12,   _______,       _______, KC_MPLY, KC_MPRV, KC_MNXT, KC_MSTP, _______ },
+  {_______, _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______, _______ },
+  {_______, _______, _______, _______, _______, XXXXXXX,       XXXXXXX, _______, _______, _______, _______, _______ }
 },
 
 
-[_SHIFTED] = { /* Shifted Layer, layered so that tri_layer can be used, or selectively
-                                 able to modify individual key's shifted behaviour */
-  {_______, _______, _______, _______, _______,       _______, _______, _______, _______, _______ },
-  {_______, _______, _______, _______, _______,       _______, _______, _______, _______, _______ },
-  {_______, _______, _______, _______, _______,       _______, _______, _______, _______, _______ },
-  {XXXXXXX, _______, _______, _______, _______,       _______, _______, _______, _______, XXXXXXX },
-  {XXXXXXX, _______, _______, _______, _______,       _______, _______, _______, _______, XXXXXXX }
-},
+[_MISC] = { 
 
-
-
-[_FUNCTION] = { /* Function Layer, primary alternative layer featuring numpad on right hand,
-                                   cursor keys on left hand, and all symbols*/
-  {KC_AMPR, KC_PERC, KC_UP,   KC_CIRC, KC_PIPE,       KC_LBRC, KC_7,    KC_8,    KC_9,    KC_MINS },
-  {KC_AT,   KC_LEFT, KC_DOWN, KC_RGHT, KC_HASH,       KC_LPRN, KC_4,    KC_5,    KC_6,    KC_PLUS },
-  {KC_ASTR, KC_UNDS, KC_EXLM, KC_DLR,  KC_BSLS,       KC_LCBR, KC_1,    KC_2,    KC_3,    KC_ENT  },
-  {XXXXXXX, KC_HOME, KC_GRV,  KC_PWR,  _______,       _______, KC_EQL,  KC_TILD, KC_DOT,  XXXXXXX },
-  {XXXXXXX, KC_END,  _______, _______, _______,       _______, KC_0,    _______, KC_PSCR, XXXXXXX }
-},
-
-
-[_FUNCSHIFT] = { /* Function Shifted Layer, secondary alternative layer with closing brackets,
-                                            and F-keys under their numpad equivalents*/
-  {_______, _______, _______, _______, _______,       KC_RBRC, KC_F7,   KC_F8,   KC_F9,   KC_F10  },
-  {_______, _______, _______, _______, _______,       KC_RPRN, KC_F4,   KC_F5,   KC_F6,   KC_F11  },
-  {_______, _______, _______, _______, _______,       KC_RCBR, KC_F1,   KC_F2,   KC_F3,   KC_F12  },
-  {XXXXXXX, _______, _______, _______, _______,       _______, _______, _______, _______, XXXXXXX },
-  {XXXXXXX, _______, _______, _______, _______,       _______, _______, _______, _______, XXXXXXX }
+  {_______, _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______, RESET   },
+  {_______, _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______, _______ },
+  {KC_CAPS, _______, _______, _______, DVORAK,  _______,       _______, QWERTY,  _______, _______, _______, _______ },
+  {_______, _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______, _______ },
+  {_______, _______, _______, _______, _______, XXXXXXX,       XXXXXXX, _______, _______, _______, _______, _______ }
 }
 
 };
@@ -84,11 +94,11 @@ const uint16_t PROGMEM fn_actions[] = {
 
 };
 
-static uint16_t key_timer;
+//static uint16_t key_timer;
 
-const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
+/*const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
-  // MACRODOWN only works in this function
+   // MACRODOWN only works in this function
     switch(id) {
 
       	//switch multiplexing for media, short tap for volume up, long press for play/pause
@@ -129,21 +139,58 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                 }
           	}
           	break;     
+        
 
         break;
+
     }
     return MACRO_NONE;
-};
+};  */
 
-static bool singular_key = false;
+//static bool singular_key = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
-	uint8_t layer;
-  layer = biton32(layer_state);  // get the current layer
+	//uint8_t layer;
+  //layer = biton32(layer_state);  // get the current layer
+
+  switch (keycode) {
+        case QWERTY:
+          if (record->event.pressed) {
+            set_single_persistent_default_layer(_QWERTY);
+          }
+          return false;
+          break;
+        case DVORAK:
+          if (record->event.pressed) {
+            set_single_persistent_default_layer(_DVORAK);
+          }
+          return false;
+          break;
+        case LOWER:
+          if (record->event.pressed) {
+            layer_on(_LOWER);
+            update_tri_layer(_LOWER, _RAISE, _MISC);
+          } else {
+            layer_off(_LOWER);
+            update_tri_layer(_LOWER, _RAISE, _MISC);
+          }
+          return false;
+          break;
+        case RAISE:
+          if (record->event.pressed) {
+            layer_on(_RAISE);
+            update_tri_layer(_LOWER, _RAISE, _MISC);
+          } else {
+            layer_off(_RAISE);
+            update_tri_layer(_LOWER, _RAISE, _MISC);
+          }
+          return false;
+          break;
+      }
 
   //custom layer handling for tri_layer,
-  switch (keycode) {
+  /*switch (keycode) {
   case FNKEY:
   	if (record->event.pressed) {
       key_timer = timer_read();
@@ -193,7 +240,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
               register_mods(MOD_LSFT);
           }
   	}
-  }
+  }*/
 
   return true;
 };
@@ -202,17 +249,20 @@ void matrix_scan_user(void) {
     uint8_t layer = biton32(layer_state);
     
     switch (layer) {
-    	case _MALT:
+    	case _QWERTY:
     		set_led_off;
     		break;
-        case _FUNCTION:
+    	case _DVORAK:
+    		set_led_red;
+    		break;
+        case _LOWER:
             set_led_blue;
             break;
-        case _SHIFTED:
-            set_led_red;
+        case _RAISE:
+            set_led_green;
             break;
-        case _FUNCSHIFT:
-        	set_led_green;
+        case _MISC:
+        	set_led_white;
         	break;
         default:
             break;
